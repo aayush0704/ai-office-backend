@@ -1,6 +1,6 @@
 flask
 flask-cors
 gunicorn
-psycopg2
-openai
+torch
+torchvision
 transformers
