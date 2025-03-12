@@ -4,4 +4,4 @@ gunicorn
 torch
 torchvision
 transformers
-
+accelerate
