@@ -12,19 +12,22 @@ CORS(app)
 @app.route('/chat', methods=['POST'])
 def chat():
     """Handles chat requests from the frontend."""
-    user_input = request.json.get('message')
+    user_input = request.json.get('message', "")
     user_id = request.json.get('user_id', 1)
 
-    if not user_input:
+    # Ensure user_input is always a string
+    user_input = str(user_input).lower()
+
+    if not user_input.strip():
         return jsonify({"reply": "Error: No message received."}), 400
 
     try:
-        if "leave" in user_input.lower():
+        if "leave" in user_input:
             response = process_leave_request(user_id)
-        elif "certificate" in user_input.lower():
-            certificate_type = "bonafide" if "bonafide" in user_input.lower() else "noc"
+        elif "certificate" in user_input:
+            certificate_type = "bonafide" if "bonafide" in user_input else "noc"
             response = generate_certificate(user_id, certificate_type)
-        elif any(word in user_input.lower() for word in ["exam", "calendar", "schedule"]):
+        elif any(word in user_input for word in ["exam", "calendar", "schedule"]):
             response = fetch_academic_info(user_id, user_input)
         else:
             response = generate_ai_response(user_input)  # Uses DeepSeek API via OpenRouter
