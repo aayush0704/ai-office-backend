@@ -4,9 +4,9 @@ import json
 
 # OpenRouter API Details for DeepSeek
 API_URL = "https://openrouter.ai/api/v1/chat/completions"
-OPENROUTER_API_KEY = os.getenv("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")  # Fetch from Render Environment Variables
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")  # Fetch from Render Environment Variables
 HEADERS = {
-    "Authorization": f"Bearer {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}",
+    "Authorization": f"Bearer {OPENROUTER_API_KEY}",
     "Content-Type": "application/json"
 }
 
