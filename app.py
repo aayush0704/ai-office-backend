@@ -40,4 +40,5 @@ def chat():
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))  # Use Render's assigned PORT
-    app.run(host='0.0.0.0', port=port)
+    print(f"Starting server on port {port}...")  # Debugging log
+    app.run(host='0.0.0.0', port=port)  # Ensure binding to 0.0.0.0
