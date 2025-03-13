@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from nlp_agent import generate_ai_response  # Using Hugging Face API for AI responses
+from nlp_agent import generate_ai_response  # Now uses DeepSeek via OpenRouter
 from leave_agent import process_leave_request
 from certificate_agent import generate_certificate
 from query_agent import fetch_academic_info
@@ -27,10 +27,14 @@ def chat():
         elif any(word in user_input.lower() for word in ["exam", "calendar", "schedule"]):
             response = fetch_academic_info(user_id, user_input)
         else:
-            response = generate_ai_response(user_input)  # Uses Hugging Face API
+            response = generate_ai_response(user_input)  # Uses DeepSeek API via OpenRouter
+
+        # Check if DeepSeek API returned an error
+        if response.startswith("Error:"):
+            return jsonify({"reply": response}), 500  # Internal Server Error
 
     except Exception as e:
-        response = f"Error processing request: {str(e)}"
+        return jsonify({"reply": f"Error processing request: {str(e)}"}), 500
 
     return jsonify({"reply": response})
 
