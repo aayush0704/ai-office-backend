@@ -1,7 +1,4 @@
 flask
 flask-cors
 gunicorn
-torch
-torchvision
-transformers
-accelerate
+requests
